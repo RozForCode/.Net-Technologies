@@ -39,3 +39,14 @@ Console.WriteLine(safeNum);
 }
 
 CelciusToFarenheit.run();
+
+
+
+// verbatim string lateral
+
+string str = @"hello \n world"; // ignores special escape sequence character
+string msg = @"type ""x"" to exit"; // type "x" to exit
+
+// free space in string interpolation
+
+string fullname = $"{str,10} {msg,-10}";
