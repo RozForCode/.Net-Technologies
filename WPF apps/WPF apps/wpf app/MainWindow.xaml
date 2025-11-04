@@ -1,0 +1,51 @@
+﻿<Window x:Class="Exercise_Week5.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Exercise_Week5"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="563" Width="1107" Background="#FFF7F1B2">
+    <Grid Margin="0,26,29,0" Background="#FF9BAFED">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="97*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <TextBlock
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="154,15,0,0" Height="35" Width="190" RenderTransformOrigin="0.464,0.547" Grid.Column="1" Background="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"><Run Language="en-ca" Text="23&#x9;"/></TextBlock>
+        <TextBox x:Name="txtNumber1"
+                 Text="Enter Number 1"
+                 Width="100"
+                 Height="25"
+                 HorizontalAlignment="Left"
+                 Margin="150,10,0,0"/>
+        <TextBlock
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="148,55,0,0" Height="46" Width="190" RenderTransformOrigin="0.482,1.686" Grid.Column="1" Background="#FFBDA5A5"><Run Language="en-ca" Text="34"/></TextBlock>
+        <TextBox x:Name="txtNumber2"
+                 Text="Enter Number 1"
+                 Width="100"
+                 Height="25"
+                 HorizontalAlignment="Left"
+                 Margin="150,10,0,0"/>
+
+
+        <Button Grid.Column="1" Content="Add" HorizontalAlignment="Left" Margin="138,118,0,0" VerticalAlignment="Top" Height="41" Width="88" RenderTransformOrigin="-0.397,-0.041"/>
+        <Button Grid.Column="1" Content="Multiply" HorizontalAlignment="Left" Margin="138,176,0,0" VerticalAlignment="Top" Height="41" Width="88" RenderTransformOrigin="-0.397,-0.041"/>
+        <Button Grid.Column="1" Content="Substract" HorizontalAlignment="Left" Margin="250,176,0,0" VerticalAlignment="Top" Height="41" Width="88" RenderTransformOrigin="-0.397,-0.041"/>
+        <Button Grid.Column="1" Content="Divide" HorizontalAlignment="Left" Margin="250,118,0,0" VerticalAlignment="Top" Height="41" Width="88" RenderTransformOrigin="-0.397,-0.041"/>
+
+        <Label x:Name="lblResult"
+               Content="Result will appear here"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Margin="148,271,0,0"
+               FontSize="16" Height="32" Width="203" RenderTransformOrigin="0.481,3.932" Grid.Column="1"/>
+
+    </Grid>
+</Window>

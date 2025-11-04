@@ -1,0 +1,16 @@
+﻿<Window x:Class="Exercise2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Exercise2"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <TextBox x:Name="Discount" HorizontalAlignment="Left" Margin="278,48,0,0" TextWrapping="Wrap" Text="Discount%" VerticalAlignment="Top" Width="165" Height="37"/>
+        <TextBox x:Name="Subtotal" Margin="278,103,357,0" TextWrapping="Wrap" Text="Subtotal" VerticalAlignment="Top" Width="165" Height="37"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="278,157,0,0" VerticalAlignment="Top" Height="37" Width="76" RenderTransformOrigin="0.583,0.542" Click="showDiscount"/>
+        <Label x:Name="finalAmount" Content="Label" HorizontalAlignment="Left" Margin="400,163,0,0" VerticalAlignment="Top" Width="139"/>
+
+    </Grid>
+</Window>
