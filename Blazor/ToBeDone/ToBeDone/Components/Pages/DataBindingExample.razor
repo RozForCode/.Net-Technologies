@@ -1,0 +1,10 @@
+﻿@page "/databindingexample"
+@rendermode InteractiveServer
+
+<h3>DataBindingExample for @name</h3>
+@* <input type="text" @bind="name" placeholder="Type your name" /> *@
+<input type="text" @bind-value="name" @bind-value:event="oninput" placeholder="Type your name" />
+
+@code {
+	private string name = "Blazor User";
+}

@@ -1,0 +1,34 @@
+﻿@page "/counter"
+@rendermode InteractiveServer
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+<div class="mb-2">
+	<input type="number" @bind="IncrementAmount" class="form-control" />
+    <button class="btn btn secondary mt-2" @onclick="setInitial">Set Starting Value</button>
+</div>
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button class="btn btn-primary" @onclick="ResetCount">Reset me</button>
+
+@code {
+    private int currentCount = 0;
+    [Parameter]
+    public int IncrementAmount { get; set; } = 2;
+    private void IncrementCount()
+    {
+        currentCount+= IncrementAmount;
+    }
+    private void ResetCount()
+    {
+        if (IncrementAmount>0) { currentCount = IncrementAmount; }
+        else { currentCount = 0; }
+    }
+    private void setInitial()
+    {
+        currentCount = IncrementAmount;
+	}
+
+}

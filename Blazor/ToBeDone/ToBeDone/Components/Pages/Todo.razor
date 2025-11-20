@@ -1,0 +1,50 @@
+﻿@page "/todo"
+@rendermode InteractiveServer
+
+
+<PageTitle>Todo</PageTitle>
+
+<h3>Todo (@todoItems.Count(todo => !todo.IsCompleted))</h3>
+
+<input type="text" @bind="NewTodo" placeholder="Add something" />
+<button @onclick="addTodo">Add</button>
+
+<ul class="list-unstyled">
+	@foreach (var todo in todoItems)
+	{
+
+		<li class="list-group-item d-flex align-items-center p-2">
+			<div class="form-check m-0">
+				<input type="checkbox"
+					   @bind="todo.IsCompleted"
+					   class="form-check-input"
+					   id="@($"todo-{todo.Title}")" />
+				<label class="form-check-label visually-hidden" for="@($"todo-{todo.Title}")">
+					Toggle Completion
+				</label>
+			</div>
+			<input type="text"
+				   @bind="todo.Title"
+				   class="form-control me-3" 
+				   placeholder="Enter task title" />
+
+			
+		</li>
+		
+	}	
+</ul>
+
+@code {
+	private List<TodoItem> todoItems = new List<TodoItem>();
+	private string? NewTodo;
+	private void addTodo()
+	{
+		if (!string.IsNullOrWhiteSpace(NewTodo))
+		{
+			TodoItem newItem = new TodoItem { Title = NewTodo };
+			todoItems.Add(newItem);
+			NewTodo = string.Empty;
+		}
+		
+	}
+}
