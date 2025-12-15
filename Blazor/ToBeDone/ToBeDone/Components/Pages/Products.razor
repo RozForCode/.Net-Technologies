@@ -1,0 +1,164 @@
+﻿@page "/products"
+@inject ProductService ProductService
+@rendermode InteractiveServer 
+
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="mb-4">Product Management</h3>
+        </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">@(isEditing ? "Edit Product" : "Add New Product")</h5>
+        </div>
+        <div class="card-body">
+            <EditForm Model="@currentProduct" OnValidSubmit="HandleSave">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="name" class="form-label">Product Name</label>
+                        <InputText id="name" class="form-control" @bind-Value="currentProduct.Name" placeholder="Enter product name" />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="price" class="form-label">Price</label>
+                        <InputNumber id="price" class="form-control" @bind-Value="currentProduct.Price" />
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-success w-100">
+                            <i class="bi bi-save"></i> Save
+                        </button>
+                    </div>
+                </div>
+                 @if (isEditing)
+                {
+                    <div class="mt-2">
+                        <button type="button" class="btn btn-secondary btn-sm" @onclick="CancelEdit">Cancel Edit</button>
+                    </div>
+                }
+            </EditForm>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h5 class="mb-0">Product List</h5>
+        </div>
+        <div class="card-body">
+            @if (products == null)
+            {
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            }
+            else if (!products.Any())
+            {
+                <div class="alert alert-info">No products found in the database.</div>
+            }
+            else
+            {
+                <table class="table table-hover table-striped align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var p in products)
+                        {
+                            <tr>
+                                <td>@p.Id</td>
+                                <td>@p.Name</td>
+                                <td>@p.Price.ToString("C")</td>
+                                <td class="text-end">
+                                    <button class="btn btn-warning btn-sm me-2" @onclick="() => PrepareEdit(p.Id)">
+                                        Edit
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" @onclick="() => DeleteProduct(p.Id)">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    // State variables
+    private List<Product>? products;
+    private Product currentProduct = new Product();
+    private bool isEditing = false;
+
+    // 1. GetProductsAsync (READ ALL)
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProducts();
+    }
+
+    private async Task LoadProducts()
+    {
+        products = await ProductService.GetProductsAsync();
+    }
+
+    // 2. GetProductByIdAsync (READ ONE)
+    // We use this when clicking 'Edit' to ensure we edit the freshest data
+    private async Task PrepareEdit(int id)
+    {
+        var product = await ProductService.GetProductByIdAsync(id);
+        if (product != null)
+        {
+            currentProduct = product;
+            isEditing = true;
+        }
+    }
+
+    // Handle Form Submission (Logic for Add vs Update)
+    private async Task HandleSave()
+    {
+        if (isEditing)
+        {
+            // 3. UpdateAsync (UPDATE)
+            await ProductService.UpdateAsync(currentProduct);
+        }
+        else
+        {
+            // 4. AddAsync (CREATE)
+            await ProductService.AddAsync(currentProduct);
+        }
+
+        // Reset form and reload list
+        currentProduct = new Product();
+        isEditing = false;
+        await LoadProducts();
+    }
+
+    // 5. DeleteAsync (DELETE)
+    private async Task DeleteProduct(int id)
+    {
+        bool confirmed = await Task.FromResult(true); // In a real app, use JSInterop for a confirm dialog
+        if (confirmed)
+        {
+            await ProductService.DeleteAsync(id);
+            await LoadProducts();
+        }
+    }
+
+    private void CancelEdit()
+    {
+        currentProduct = new Product();
+        isEditing = false;
+    }
+}

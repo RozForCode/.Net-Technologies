@@ -1,0 +1,22 @@
+﻿@page "/students"
+@inject AppDbContext db
+
+<h3>Students</h3>
+
+<a href="/students/create">Add New</a>
+
+<ul>
+    @foreach (var s in students)
+    {
+        <li>@s.Name (@s.Age) | <a href="/students/edit/@s.Id">Edit</a></li>
+    }
+</ul>
+
+@code {
+    List<Student> students = new();
+
+    protected override void OnInitialized()
+    {
+        students = db.Students.ToList();
+    }
+}

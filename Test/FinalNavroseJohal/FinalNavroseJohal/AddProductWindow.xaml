@@ -1,0 +1,42 @@
+﻿<Window x:Class="FinalNavroseJohal.AddProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add Product" Height="320" Width="400">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="0 0 0 10">
+
+            <!-- Product Name -->
+            <TextBlock Text="Product Name:"/>
+            <TextBox x:Name="txtProductName" Margin="0 0 0 10"/>
+
+            <!-- Product Price -->
+            <TextBlock Text="Unit Price:"/>
+            <TextBox x:Name="txtPrice" Margin="0 0 0 10"/>
+
+            <!-- Categories -->
+            <TextBlock Text="Category:"/>
+            <ComboBox x:Name="cmbCategory"
+                      DisplayMemberPath="CategoryName"
+                      SelectedValuePath="CategoryID"
+                      Margin="0 0 0 10"/>
+
+            <!-- Buttons -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button x:Name="btnAdd" Content="Add Product" Width="120"
+                        Margin="0 0 10 0" Click="btnAdd_Click"/>
+
+                <Button x:Name="btnClose" Content="Close" Width="80"
+                        Click="btnClose_Click"/>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</Window>

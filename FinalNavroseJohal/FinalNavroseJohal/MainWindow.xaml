@@ -1,0 +1,33 @@
+﻿<Window x:Class="FinalNavroseJohal.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Northwind Product Viewer" Height="600" Width="800">
+
+    <Grid Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top Buttons -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 0 0 10">
+            <Button x:Name="btnGetAll" Width="120" Margin="5" Content="Get All Products" Click="btnGetAll_Click"/>
+            <Button x:Name="btnClear" Width="120" Margin="5" Content="Clear Data" Click="btnClear_Click"/>
+            <Button x:Name="btnSearch" Width="120" Margin="5" Content="Search Product" Click="btnSearch_Click"/>
+            <Button x:Name="btnAdd" Width="120" Margin="5" Content="Add New Product" Click="btnAdd_Click"/>
+        </StackPanel>
+
+        <!-- Category + search -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 0 0 10">
+            <ComboBox x:Name="cmbCategories" Width="200" Margin="5"
+                      SelectionChanged="cmbCategories_SelectionChanged"/>
+            <TextBox x:Name="txtSearch" Width="200" Margin="5" ToolTip="Enter product name..." />
+        </StackPanel>
+
+        <!-- DataGrid -->
+        <DataGrid x:Name="dgProducts" Grid.Row="2" AutoGenerateColumns="True"
+                  Margin="0 10 0 0" />
+    </Grid>
+</Window>

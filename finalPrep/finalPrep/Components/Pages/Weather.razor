@@ -1,0 +1,20 @@
+﻿@page "/students/create"
+@inject AppDbContext db
+@inject NavigationManager nav
+@rendermode InteractiveServer
+<h3>Add Student</h3>
+
+<input @bind="student.Name" placeholder="Name" />
+<input @bind="student.Age" type="number" placeholder="Age" />
+<button @onclick="CreateStudent">Save</button>
+
+@code {
+    Student student = new();
+
+    void CreateStudent()
+    {
+        db.Students.Add(student);
+        db.SaveChanges();
+        nav.NavigateTo("/students");
+    }
+}

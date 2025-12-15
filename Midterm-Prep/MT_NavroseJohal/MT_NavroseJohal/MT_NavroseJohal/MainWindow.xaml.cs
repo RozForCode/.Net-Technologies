@@ -1,0 +1,231 @@
+﻿using A2NavroseJohal;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace MT_NavroseJohal
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        int id = 1009;
+        List<Employee> employees = new List<Employee>
+            {
+                new HourlyEmployee("E001", "John Doe", 20.5m, 40),
+                new CommissionEmployee("E002", "Jane Smith", 5000, 0.1m),
+                new SalariedEmployee("E003", "Michael Brown", 1200),
+                new HourlyEmployee("E004", "Emily Davis", 18.75m, 35),
+                new CommissionEmployee("E005", "Sam Wilson", 7000, 0.12m)
+            };
+        public MainWindow()
+        {
+            InitializeComponent();
+            EmployeeListBox.ItemsSource = employees.Select(emp => emp.EmployeeName).ToList();
+        }
+
+        // close and clear button
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+           
+            NameTextBox.Clear();
+            HoursWorkedTextBox.Clear();
+            HourlyWageTextBox.Clear();
+
+            GrossEarningsTextBox.Clear();
+            TaxTextBox.Clear();
+            NetEarningsTextBox.Clear();
+        }
+        // for radiobutton selection
+        private void EmployeeType_Checked(object sender, RoutedEventArgs e)
+        {
+            // Ensure all controls are initialized to avoid NullReferenceException
+            if (lblHoursWorked == null || lblHourlyWage == null || HourlyWageTextBox == null)
+                return;
+
+            // If Hourly Paid is selected
+            if (rdoHourly.IsChecked == true)
+            {
+                lblHoursWorked.Text = "Hours Worked";
+                lblHourlyWage.Text = "Hourly Wage";
+
+                // Ensure fields are visible
+                lblHourlyWage.Visibility = Visibility.Visible;
+                HourlyWageTextBox.Visibility = Visibility.Visible;
+            }
+            // If Commission Based is selected
+            else if (rdoCommission.IsChecked == true)
+            {
+                lblHoursWorked.Text = "Gross Sales";
+                lblHourlyWage.Text = "Commission Rate";
+
+                // Ensure fields are visible
+                lblHourlyWage.Visibility = Visibility.Visible;
+                HourlyWageTextBox.Visibility = Visibility.Visible;
+            }
+            // If Weekly Salary is selected
+            else if (rdoWeekly.IsChecked == true)
+            {
+                lblHoursWorked.Text = "Weekly Salary";
+
+                // Hide Hourly Wage fields
+                lblHourlyWage.Visibility = Visibility.Collapsed;
+                HourlyWageTextBox.Visibility = Visibility.Collapsed;
+            }
+        }
+        // listbox selection
+        private void EmployeeListBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            int selectedIndex = EmployeeListBox.SelectedIndex;
+            if (selectedIndex >= 0)
+            {
+                var selectedEmployee = employees[selectedIndex];
+
+                // Display employee name
+                NameTextBox.Text = selectedEmployee.EmployeeName;
+
+                // Update radio button based on employee type
+                rdoHourly.IsChecked = false;
+                rdoCommission.IsChecked = false;
+                rdoWeekly.IsChecked = false;
+
+                switch (selectedEmployee.EmployeeType)
+                {
+                    case EmployeeType.Hourly:
+                        rdoHourly.IsChecked = true;
+                        lblHoursWorked.Text = "Hours Worked:";
+                        lblHourlyWage.Text = "Hourly Wage:";
+                        HoursWorkedTextBox.Text = ((HourlyEmployee)selectedEmployee).HoursWorked.ToString();
+                        HourlyWageTextBox.Text = ((HourlyEmployee)selectedEmployee).HourlyWage.ToString("C");
+                        break;
+
+                    case EmployeeType.Commission:
+                        rdoCommission.IsChecked = true;
+                        lblHoursWorked.Text = "Gross Sales:";
+                        lblHourlyWage.Text = "Commission Rate:";
+                        HoursWorkedTextBox.Text = ((CommissionEmployee)selectedEmployee).GrossSales.ToString("C");
+                        HourlyWageTextBox.Text = ((CommissionEmployee)selectedEmployee).CommissionRate.ToString("P");
+                        break;
+
+                    case EmployeeType.Salaried:
+                        rdoWeekly.IsChecked = true;
+                        lblHoursWorked.Text = "Weekly Salary:";
+                        lblHourlyWage.Visibility = Visibility.Collapsed;
+                        HourlyWageTextBox.Visibility = Visibility.Collapsed;
+                        HoursWorkedTextBox.Text = ((SalariedEmployee)selectedEmployee).WeeklySalary.ToString("C");
+                        break;
+                }
+
+                // Calculate and display earnings
+                decimal grossEarnings = selectedEmployee.GrossEarnings;
+                decimal tax = grossEarnings * 0.2m; // Assuming 20% tax rate
+                decimal netEarnings = grossEarnings - tax;
+
+                GrossEarningsTextBox.Text = grossEarnings.ToString("C");
+                TaxTextBox.Text = tax.ToString("C");
+                NetEarningsTextBox.Text = netEarnings.ToString("C");
+            }
+        }
+        // for calculate field
+        private void Calculate_Click(object sender, RoutedEventArgs e)
+        {
+            // Validate input
+            if (string.IsNullOrWhiteSpace(NameTextBox.Text))
+            {
+                MessageBox.Show("Please enter the employee's name.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Determine the selected employee type
+            Employee newEmployee = null;
+
+            try
+            {
+                // Generate unique ID
+                id += 1;
+                string uniqueId = "E" + id.ToString();
+
+                if (rdoHourly.IsChecked == true)
+                {
+                    newEmployee = new HourlyEmployee(
+                        uniqueId,
+                        NameTextBox.Text,
+                        decimal.Parse(HourlyWageTextBox.Text),
+                        decimal.Parse(HoursWorkedTextBox.Text)
+                    );
+                }
+                else if (rdoCommission.IsChecked == true)
+                {
+                    newEmployee = new CommissionEmployee(
+                        uniqueId,
+                        NameTextBox.Text,
+                        decimal.Parse(HoursWorkedTextBox.Text), // Reusing this field for Gross Sales
+                        decimal.Parse(HourlyWageTextBox.Text) // Reusing this field for Commission Rate
+                    );
+                }
+                else if (rdoWeekly.IsChecked == true)
+                {
+                    newEmployee = new SalariedEmployee(
+                        uniqueId,
+                        NameTextBox.Text,
+                        decimal.Parse(HoursWorkedTextBox.Text) // Reusing this field for Weekly Salary
+                    );
+                }
+
+                // Add the new employee to the list
+                employees.Add(newEmployee);
+
+                // Update the ListBox
+                UpdateEmployeeListBox();
+
+                // Calculate earnings
+                decimal grossEarnings = newEmployee.GrossEarnings;
+                decimal tax = grossEarnings * 0.2m; // Assuming 20% tax rate
+                decimal netEarnings = grossEarnings - tax;
+
+                // Display earnings
+                GrossEarningsTextBox.Text = grossEarnings.ToString("C");
+                TaxTextBox.Text = tax.ToString("C");
+                NetEarningsTextBox.Text = netEarnings.ToString("C");
+
+            }
+            catch (FormatException) 
+            {
+                MessageBox.Show("One or more numeric fields contain invalid data. Please ensure all numeric values are entered correctly.", "Invalid Numeric Input", MessageBoxButton.OK, MessageBoxImage.Warning);
+            } 
+            catch (OverflowException) 
+            {
+                MessageBox.Show("One or more numeric fields contain values that are too large. Please enter reasonable values.", "Numeric Overflow", MessageBoxButton.OK, MessageBoxImage.Warning);
+            } 
+            catch (Exception ex) 
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Unexpected Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            } 
+        }
+
+        // Helper method to update the ListBox
+        private void UpdateEmployeeListBox()
+        {
+            EmployeeListBox.ItemsSource = employees.Select(emp => emp.EmployeeName).ToList();
+        }
+
+
+
+
+
+
+
+    }
+}

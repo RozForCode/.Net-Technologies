@@ -1,0 +1,141 @@
+2 .NET & MVC Basics (interviewers expect awareness)
+
+
+3 Simple DSA in C#
+
+
+4 Behavioral / Soft Skills
+Here's what I'll be doing for .Net in the following weeks:
+Understanding XAML
+• Layouts - Grid, StackPanel, Canvas etc.
+• UI controls - buttons, textboxes, list controls etc.
+• Input events and styles
+• Window, dialogs and message boxes
+• Give break-down of the Mid-Term Exam.
+Assignment #2 Due
+(10%)
+6 Quiz #2 (5%)
+Based on Modules 3-4
+7 MIDTERM EXAM (25%) MIDTERM EXAM
+(25%)
+8 READING WEEK: OCT 20 – OCT24 READING WEEK
+9
+• Module #5: Database Programming
+• Introduction to ADO.NET
+• Connected and Disconnected data access models
+Faculty of Applied Science & Technology
+Page 3 of 6
+Weeks Topics Assessment
+10
+• Introduction to O/RM and Entity Framework
+• Code-First and Database-First approaches in EF
+• Performing CRUD operations using Entity Framework
+Assignment #3
+Released (10%)
+Based on Module 5
+11
+• Module #6: Web Development with ASP.NET Core and Blazor
+• Introduction to ASP.NET Core and Blazor
+• Blazor Server and Web Assembly
+• UI components, Navigation, routing and layouts
+• Data binding and event handling
+• Forms, validations and database interactions
+Assignment #3 Due
+12 Quiz #3 (5%)
+Based on Module 6
+13
+• Module #7: Cross-Platform App Development
+• Introduction to .NET MAUI
+• Understanding UI and XAML
+• Layouts and navigation
+• Accessing platform-specific features
+• Using emulators to test cross-platform applications
+
+
+
+
+
+
+
+
+
+
+
+overload - diff para, compile time
+override - part of inheritance, run-time
+
+
+
+
+we can free memory using Displose() in C#
+inherited from class IDispose
+
+
+//Method syntax
+var highearners = employees.where(e=> e.salary > 5000).OrderByDescending(e=>e.salary).select(e=> new { e.Name, e.Salary}.ToList();
+// query syntax
+var q = from e in employees where e.salary >5000 orderby e.Sarlary descending select new { "Name" = e.Name, e.Salary}
+var list = q.ToList();
+
+
+string intern pool
+
+
+new StringBuilder("Programming", 100);
+
+
+
+left
+XAML & Desktop UI (layouts, controls, events)
+
+.NET MAUI (cross-platform apps)
+
+
+
+
+
+
+
+
+first - introduce, why work, 25 min technical, .NET, Angular, OOP
+Basic - projects, 
+
+q example - oop, sql, entity model, onetomany, give examples
+tip - relate it to projects --- key
+agile, jquery.
+
+Debugging tech, attp status code errors, 
+403, 500. API knowledge, status codes.
+Angular, JS - how to access html element,
+how to log data into console.log() other way.
+Basic concepts
+
+
+200,201,400,401,403,404,500,503
+
+we can use console.error(), console.debug(), console.info(), console.warn()
+
+
+
+
+
+
+
+
+Ngugen questions:
+1.
+What kind of questions did they ask you in the interview — more technical, DSA, behavioral, or a mix
+
+
+2.
+Were there any specific technical topics (C#, EF, Angular, etc.) they focused on
+What do you think helped you stand out as a co-op and get good reviews from your team?
+
+3.
+How did you prepare for the interview, and what helped the most
+
+4.
+What technologies do you actually use day-to-day?
+
+5.
+What was the hardest thing to adjust to in the first month?

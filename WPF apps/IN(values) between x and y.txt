@@ -1,0 +1,44 @@
+IN(values) between x and y
+like "A%"
+like "%son"
+IS NULL
+AND OR < >
+
+COunt(), sum(), avg(), 
+
+
+from color in colors
+let uppercaseString= color.ToUpper()
+where upperCaseString.StartsWith("R")
+orderby uppercaseString
+select uppercaseString
+
+
+
+from emp in employees
+orderby emp.LastName, emp.FirstName
+select emp;
+
+
+queryvar.Any() -> true if one value, .first() -> gives first value
+
+var lastNames = from emp in employees select emp.LastNames
+foreach(var e in lastNames.Distinct())
+.distinct() removes all duplicates
+
+select{} clause
+
+
+using select{} query returns formatted stuff
+
+from emp in employees 
+select new {FirstName = emp.FirstName, Last = emp.LastName};
+
+basically new object of anonymous type
+
+stirng s = Console.ReadLine();
+s.ToLower();
+from e in es
+select
+
+
